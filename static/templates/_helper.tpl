@@ -1,0 +1,2 @@
+{{- define "generate" -}}
+{{- end -}}
