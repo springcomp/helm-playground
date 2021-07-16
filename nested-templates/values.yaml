@@ -1,0 +1,13 @@
+global:
+  name: yaml
+  env: placeholder
+  items:
+    item-one:
+      envs:
+      - int
+    item-two:
+      envs:
+      - int
+    item-three:
+      envs:
+      - all
