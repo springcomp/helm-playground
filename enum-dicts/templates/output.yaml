@@ -1,0 +1,34 @@
+---
+version: 1.0.0
+{{- include "newline" . -}}
+
+{{- $globalScope := .Values.global -}}
+{{- $chartValue := omit .Values "global" -}}
+{{- $files := .Files -}}
+{{- $template := .Template -}}
+
+{{- /* ===================================================== */ -}}
+{{- /* Overwrite configuration from env-specific values file */ -}}
+{{- /* ===================================================== */ -}}
+{{- $values := .Files.Glob (printf "values.%s.yaml" .Values.global.env) -}}
+{{- $currentScope := . -}}
+{{- range $path, $_ :=  $values -}}
+{{- $content := tpl ($.Files.Get $path) $currentScope | fromYaml -}}
+{{- $other := mergeOverwrite $globalScope $content.global -}}
+{{- end -}}
+
+{{- $configuration := (merge (dict "Files" $files) (dict "Template" $template ) (dict "env" $globalScope.env) (dict "global" $globalScope)) -}}
+{{- include "generate" $configuration -}}
+
+items:
+{{- /* ===================================================== */ -}}
+{{- /* Enumerating items in a map                            */ -}}
+{{- /* Each item is an object (i.e. a "map")                 */ -}}
+{{- /* Each item has a $key and a $value                     */ -}}
+{{- /* "$value" and "." both represent the current object    */ -}}
+{{- /* ===================================================== */ -}}
+{{- range $key, $value := $globalScope.items }}
+- key: {{ $key }}
+  description: {{ $value.description }}
+  appearsInAllEnvironments: {{ has "all" .envs }}
+{{- end -}}
