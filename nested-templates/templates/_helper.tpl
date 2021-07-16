@@ -32,11 +32,11 @@ files:
 {{- if $envValues -}}
 {{- $envConfig = tpl $envValues . | fromYaml -}}
 {{- end -}}
-{{- (dict "null" "null") | toYaml -}}
+{{- merge $defaultConfig $envConfig | toYaml -}}
 {{- end -}}
 
-{{- define "generate-item" -}}
+{{ define "generate.item" }}
 - itemName: {{ .itemName }}
   name: {{ (index . .itemName).content.name }}
   displayName: {{ (index . .itemName).content.displayName }}
-{{- end -}}
+{{- end }}

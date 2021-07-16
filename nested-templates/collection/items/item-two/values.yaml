@@ -1,5 +1,5 @@
 item-two:
   content:
     name: {{ printf "%s-%s" .env .itemName }}
-    displayName: {{ printf "%s - %s" (.env | upper) .itemName }}
+    displayName: {{ printf "%s - %s" (.env | upper) (.itemName | camelcase) }}
   

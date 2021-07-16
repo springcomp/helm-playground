@@ -1,4 +1,4 @@
-item-one:
+item-three:
   content:
     name: {{ printf "%s-%s" .env .itemName }}
     displayName: {{ printf "%s - %s" (.env | upper) (.itemName | camelcase) }}

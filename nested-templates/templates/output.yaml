@@ -2,6 +2,10 @@
 version: 1.0.0
 {{- include "newline" . -}}
 
+{{- /* ===================================================== */ -}}
+{{- /* Initialize some global values                         */ -}}
+{{- /* ===================================================== */ -}}
+
 {{- $globalScope := .Values.global -}}
 {{- $chartValue := omit .Values "global" -}}
 {{- $files := .Files -}}
@@ -17,15 +21,14 @@ version: 1.0.0
 {{- $other := mergeOverwrite $globalScope $content.global -}}
 {{- end -}}
 
-{{- $configuration := (merge (dict "Files" $files) (dict "Template" $template ) (dict "env" $globalScope.env) (dict "global" $globalScope)) -}}
-{{- include "generate" $configuration -}}
+{{- $config := (merge (dict "Files" $files) (dict "Template" $template ) (dict "env" $globalScope.env) (dict "global" $globalScope)) -}}
+{{- include "generate" $config -}}
 
 items:
-{{ range $key, $value := $globalScope.items -}}
+{{- range $key, $value := $globalScope.items -}}
+{{- $configuration := (merge (dict "Files" $files) (dict "Template" $template ) (dict "env" $globalScope.env) (dict "global" $globalScope)) -}}
 {{- if (or (has "all" .envs) (has $globalScope.env .envs)) -}}
-- key: {{ $key }}
-{{- $items := include "load.items.values" (merge $configuration (dict "itemName" $key)) | fromYaml -}}
-{{ $items }}
-{{- /* include "generate-item" (merge $items (merge $configuration (dict "itemName" $key))) | indent 2 */ -}}
-{{ end }}
-{{ end }}
+{{- $items := include "load.items.values" (merge (dict "itemName" $key) $configuration) | fromYaml }}
+{{- include "generate.item" (merge $items (dict "itemName" $key) $configuration) -}}
+{{- end -}}
+{{- end -}}
