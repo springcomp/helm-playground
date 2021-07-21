@@ -1,2 +1,3 @@
 {{- define "generate" -}}
+{{ . | toYaml }}
 {{- end -}}
