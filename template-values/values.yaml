@@ -1,0 +1,4 @@
+global:
+  greetings:
+    hello: world!
+    salutations: dude!

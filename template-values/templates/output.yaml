@@ -1,0 +1,4 @@
+---
+version: 1.0.0
+{{- $globalScope := .Values.global -}}
+{{ include "generate" $globalScope }}
