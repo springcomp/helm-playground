@@ -1,0 +1,9 @@
+---
+version: 1.0.0
+{{ $values := .Files.Get "greetings.yaml" | fromYaml -}}
+values:
+{{/* current "root" scope '.' is lost */}}
+{{- include "generate" $values | indent 2 }}
+merged:
+{{/* current "root" scope '.' is lost */}}
+{{- include "generate" (merge $values (dict "merged" .)) | indent 2 }}
