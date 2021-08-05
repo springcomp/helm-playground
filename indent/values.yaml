@@ -1,0 +1,11 @@
+global:
+  name: baseline
+  env: dev
+  object:
+    this: is
+    a: simple
+    object: with
+    some:
+    - custom: properties
+    - custom: as collection
+    - custom: of items

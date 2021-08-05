@@ -1,0 +1,9 @@
+---
+version: 1.0.0
+{{- $globalScope := .Values.global -}}
+{{- $chartValue := omit .Values "global" -}}
+{{- $files := .Files -}}
+{{- $template := .Template -}}
+
+{{- $configuration := (merge (dict "Files" $files) (dict "Template" $template ) (dict "env" $globalScope.env) (dict "global" $globalScope)) -}}
+{{- include "generate" $configuration -}}

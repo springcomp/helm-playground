@@ -9,6 +9,7 @@ It can serve as the basis for learning step by step.
 - [template-values/](template-values/README.md): illustrates passing parameters to a template as an object.
 - [template-values-yaml/](template-values/README.md): illustrates passing parameters as an object coming from a third-party file.
 - [baseline/](baseline/README.md): contains a minimal parameterized generation of an output file.
+- [indent/](indent/README.md): demonstrates simple YAML identation.
 - [env-overrides/](env-overrides/README.md): merges configurations from user-supplied env-specific file.
 - [enum-lists/](enum-lists/README.md): demonstrates enumerating a list of items in a collection.
 - [enum-dicts/](enum-dicts/README.md): demonstrates enumerating items in a map.
