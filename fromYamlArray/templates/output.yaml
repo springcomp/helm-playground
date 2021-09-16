@@ -1,0 +1,17 @@
+---
+version: 1.0.0
+
+see: |
+  https://github.com/helm/helm/blob/a499b4b179307c267bdf3ec49b880e3dbd2a5591/pkg/engine/funcs.go#L98-L120
+  for more information about toYaml, fromYaml and fromYamlArray
+
+{{- include "newline" . -}}
+
+{{- $collection := fromYamlArray ( (list "one" "two") | toYaml ) -}}
+{{- $collection := fromYamlArray (include "sequence" .) -}}
+toYaml:
+{{ $collection | toYaml }}
+range:
+{{- range $index, $item := $collection }}
+- {{ $item -}}
+{{ end }}
