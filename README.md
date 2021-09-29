@@ -18,3 +18,4 @@ It can serve as the basis for learning step by step.
 Other templates:
 
 - [fromYamlArray](fromYamlArray): illustrates `fromYamlArray` function.
+- [booleans](booleans): illustrates logical comparisons.
