@@ -1,0 +1,16 @@
+global:
+  name: baseline
+  env: dev
+  apis:
+    global-customers:
+      envs:
+      - all
+    global-logging:
+      envs:
+      - all
+    global-lookup:
+      envs:
+      - all
+    global-transaction:
+      envs:
+      - all

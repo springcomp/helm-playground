@@ -1,0 +1,46 @@
+version: 1.0.0
+{{- $globalScope := .Values.global -}}
+{{- $chartValue := omit .Values "global" -}}
+{{- $files := .Files -}}
+{{- $template := .Template }}
+
+yaml:
+{{/* .Files.Get on a YAML file returns valid YAML */}}
+{{/* You can dump this directly as this is valid YAML  */}}
+{{ $yaml := .Files.Get "plain.yaml" }}
+{{ $yaml | nindent 2 }}
+
+string:
+{{/* .Files.Get on a Helm template file returns an opaque in-memory structure */}}
+{{/* You can dump this to string by converting to YAML first  */}}
+{{ $rawString := .Files.Get "helm.yaml" }}
+{{ $rawString | toYaml | nindent 2 }}
+
+tpl:
+{{/* Or you can evaluate that opaque in-memory structure by applying the 'tpl' function */}}
+{{ $content := .Files.Get "helm.yaml" }}
+
+{{/* templating requires the .Template property     */}}
+{{/* templating returns a valid YAML string representation */}}
+{{ $config := dict "Template" .Template "env" $globalScope.env }}
+{{ (tpl $content $config) | nindent 2 }}
+
+from-template:
+{{- define "custom-template" -}}
+{{- $config := . }}
+{{- $content := .Files.Get "helm.yaml" -}}
+{{- /* output of a custom template must be a string   */ -}}
+{{- /* templating returns a valid YAML representation */ -}}
+{{- /* therefore, no need to serialize the output     */ -}}
+{{- tpl $content $config -}}
+{{- end -}}
+
+{{/* templating requires the .Template property      */}}
+{{/* file system access requires the .Files property */}}
+{{ $config := dict "Files" .Files "Template" .Template "env" $globalScope.env }}
+{{ $result := include "custom-template" $config }}
+{{/* result of a custom template must be loaded into memory before processing */}}
+{{ $memory := $result | fromYaml }}
+{{ $env := $memory.environment }}
+{{/* output must be serialized to YAML after processing */}}
+{{ $env | toYaml | nindent 2 }}
