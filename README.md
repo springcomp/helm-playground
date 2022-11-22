@@ -14,6 +14,8 @@ It can serve as the basis for learning step by step.
 - [enum-lists/](enum-lists): demonstrates enumerating a list of items in a collection.
 - [enum-dicts/](enum-dicts): demonstrates enumerating items in a map.
 - [nested-templates/](nested-templates): uses and manipulates user-supplied nested templates.
+- [nested-templates/](nested-templates): uses and manipulates user-supplied nested templates.
+- [processing-files/](processing-files): read and process files.
 
 Other templates:
 
